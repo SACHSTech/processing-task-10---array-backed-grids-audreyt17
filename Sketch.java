@@ -82,6 +82,31 @@ public class Sketch extends PApplet {
   public void flip(int row, int column) {
     intGrid[row][column] = 1 - intGrid[row][column];  
   }
+
+  /**
+   * This function caclulates the number of cells continuously selected in a row.
+   * @param row the cells in a row
+   * @return The size of the biggest block of cells continuously selected
+   */
+  public static int continuousCount(int[] row) {
+    int max = 0;  // the size of the biggest block
+    int count = 0;  // size of current block
+    for (int i: row) {
+      if (i == 0) {
+        // end of a block
+        if (max < count) {
+          max = count;
+        }
+        count = 0;  // reset the count
+      } else {
+        ++count;  // increase the count
+      }
+    }
+    if (max < count) {  // check final block
+      max = count;
+    }
+    return max;
+  }
   
   public void mousePressed() {
     int r = calcCount(mouseY, CELL_HEIGHT);
@@ -122,8 +147,9 @@ public class Sketch extends PApplet {
     
     System.out.println("Total of " + selectedCell + " cells are selected.");
     for (int i = 0; i < ROW_COUNT; ++i) {
-      if (selectedRowCell[i] > 2) {
-        System.out.println("There are " + selectedRowCell[i] + " continuous blocks selected on row " + i + ".");
+      int count = continuousCount(intGrid[i]);
+      if (count > 2) {
+        System.out.println("There are " + count + " continuous blocks selected on row " + i + ".");
       }
       System.out.println("Row "+ i + " has " + selectedRowCell[i] + " cells selected.");
     }
