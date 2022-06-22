@@ -1,5 +1,10 @@
 import processing.core.PApplet;
 
+/**
+ * Draw 10 by 10 grid using 2D arrays, mousePressed triggers colour change of the clicked cell and its neighbours. Console prints out statistical summary of the grid.
+ * @author: TaoA
+ */
+
 public class Sketch extends PApplet {
 
   public static final int CELL_WIDTH = 20;
